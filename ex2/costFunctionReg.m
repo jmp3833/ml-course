@@ -21,15 +21,14 @@ hypothesis = sigmoid(X * theta);
 feature_divisor = 1 / m;
 
 %Cost for each value of theta
-penalty_calc = lambda / (2 * m) * sum(theta(2:size(theta)).^2);
+penalty_calc = lambda / (2 * m) * sum(theta(2:end) .^ 2);
 
-J = feature_divisor * sum((-y .* log(hypothesis) - (1 - y) .* log(1 - hypothesis)));
+J = feature_divisor * sum(-y .* log(hypothesis) - (1 - y) .* log(1 - hypothesis));
 J = J + penalty_calc;
 
 grad(1) = feature_divisor * sum((hypothesis - y) .* X(:, 1));
-for j = 2:size(theta, 1)
-  grad(j) = feature_divisor * sum((hypothesis - y) ...
-    .* X(:, j) + lambda * theta(j));
+for i = 2:size(theta, 1)
+  grad(i) = feature_divisor * sum((hypothesis - y) .* X(:, i)) + lambda / m * theta(i);
 end
 
 % =============================================================
