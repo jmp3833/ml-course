@@ -17,6 +17,20 @@ grad = zeros(size(theta));
 %               Compute the partial derivatives and set grad to the partial
 %               derivatives of the cost w.r.t. each parameter in theta
 
+hypothesis = sigmoid(X * theta); 
+feature_divisor = 1 / m;
+
+%Cost for each value of theta
+penalty_calc = lambda / (2 * m) * sum(theta(2:size(theta)).^2);
+
+J = feature_divisor * sum((-y .* log(hypothesis) - (1 - y) .* log(1 - hypothesis)));
+J = J + penalty_calc;
+
+grad(1) = feature_divisor * sum((hypothesis - y) .* X(:, 1));
+for j = 2:size(theta, 1)
+  grad(j) = feature_divisor * sum((hypothesis - y) ...
+    .* X(:, j) + lambda * theta(j));
+end
 
 % =============================================================
 

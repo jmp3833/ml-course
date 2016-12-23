@@ -16,11 +16,10 @@ p = zeros(m, 1);
 %
 
 %Use sigmoid function to get a value between zero and one 
-%that represents percent confidence. If this is ge than 50%,
-%then mark as positive
+%  that represents percent confidence. If this is gte 50%,
+%  then mark as positive
 p = sigmoid(X * theta) >= 0.5;
 
 % =========================================================================
-
 
 end
