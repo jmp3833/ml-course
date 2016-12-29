@@ -36,6 +36,17 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
+
+
+
+
+
+
+
+
+
 % =============================================================
+
+grad = grad(:);
 
 end
