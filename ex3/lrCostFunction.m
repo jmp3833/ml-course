@@ -43,12 +43,13 @@ feature_divisor = 1 / m;
 %Cost for each value of theta
 J = feature_divisor * sum((-y .* log(hypothesis) - (1 - y) .* log(1 - hypothesis)));
 
-%Gradient of the cost for each element
-%Had trouble with the dimensions of X here at first. 
-%Remember X is a matrix of every data pt at every feature. 
-%Originally was multiplying across all features
+firstGradient = feature_divisor * sum((hypothesis - y) .* X(:, 1));
 
-grad = (feature_divisor * sum((hypothesis - y) .* X))'
+%Remove first column from X and Theta 
+grad = feature_divisor * sum((hypothesis - y) .* X(:,2:end)) + (lambda / m .* theta(2:end,:))';
+
+%Append first element back to gradient matrix
+grad = [firstGradient grad]';
 
 % =============================================================
 end
