@@ -36,17 +36,19 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
+% equiv to h(x^(i)) for all values of i 
+hypothesis = sigmoid(X * theta); %Memoize since we can!
+feature_divisor = 1 / m;
 
+%Cost for each value of theta
+J = feature_divisor * sum((-y .* log(hypothesis) - (1 - y) .* log(1 - hypothesis)));
 
+%Gradient of the cost for each element
+%Had trouble with the dimensions of X here at first. 
+%Remember X is a matrix of every data pt at every feature. 
+%Originally was multiplying across all features
 
-
-
-
-
-
+grad = (feature_divisor * sum((hypothesis - y) .* X))'
 
 % =============================================================
-
-grad = grad(:);
-
 end
