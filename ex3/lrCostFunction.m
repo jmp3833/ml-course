@@ -36,20 +36,14 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
-% equiv to h(x^(i)) for all values of i 
-hypothesis = sigmoid(X * theta); %Memoize since we can!
-feature_divisor = 1 / m;
+htheta = sigmoid(X * theta);
+J = 1 / m * sum(-1 * y' * log(htheta) - (1 - y') * log(1 - htheta)) ;
 
-%Cost for each value of theta
-J = feature_divisor * sum((-y .* log(hypothesis) - (1 - y) .* log(1 - hypothesis)));
+grad = 1 / m * (X' * (htheta - y));
 
-firstGradient = feature_divisor * sum((hypothesis - y) .* X(:, 1));
-
-%Remove first column from X and Theta 
-grad = feature_divisor * sum((hypothesis - y) .* X(:,2:end)) + (lambda / m .* theta(2:end,:))';
-
-%Append first element back to gradient matrix
-grad = [firstGradient grad]';
+temp = [0; theta(2:length(theta));];
+J = J + lambda / (2 * m) * sum(temp .^ 2);
+grad = grad .+ (lambda / m) * temp;
 
 % =============================================================
 end
