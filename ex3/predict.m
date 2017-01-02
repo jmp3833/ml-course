@@ -22,14 +22,20 @@ p = zeros(size(X, 1), 1);
 %
 
 
+%Add a(0)^1 to sample set X.
+XWithBias = [ones(m, 1) X];
 
+z2 = XWithBias * Theta1';
+a2 = sigmoid(z2);
 
+%Add a(0)^2 to sample set a2.
+a2 = [ones(m, 1) a2];
 
+z3 = a2 * Theta2';
+hypothesis = sigmoid(z3);
 
-
-
+[val, p] = max(hypothesis, [], 2);
 
 % =========================================================================
-
 
 end
