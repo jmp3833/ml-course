@@ -76,7 +76,11 @@ a2 = [ones(m, 1) sigmoid(X * Theta1')];
 a3 = sigmoid(a2 * Theta2');
 
 % Compute cost function with newly calculated hypothesis
-J = (1 / m) .* sum(sum((-y) .* log(a3) - (1 - y) .* log (1 - a3)))
+J = (1 / m) .* sum(sum((-y) .* log(a3) - (1 - y) .* log (1 - a3)));
+
+% Regularized cost function
+reg = lambda / (2 * m) .* (sum(sum(Theta1(:, 2:end).^2)) + (sum(sum(Theta2(:, 2:end).^2))));
+J = J + reg;
 
 % -------------------------------------------------------------
 
