@@ -62,23 +62,21 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% Part 1 cost function
 
+% Add column of ones to the X matrix. 
+X = [ones(m, 1) X];
 
+% Use identity matrix to create 
+% matrix of vectors for each label
+y = eye(num_labels)(y,:);
 
+%Calc forward propagation 
+a2 = [ones(m, 1) sigmoid(X * Theta1')];
+a3 = sigmoid(a2 * Theta2');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+% Compute cost function with newly calculated hypothesis
+J = (1 / m) .* sum(sum((-y) .* log(a3) - (1 - y) .* log (1 - a3)))
 
 % -------------------------------------------------------------
 
@@ -86,6 +84,5 @@ Theta2_grad = zeros(size(Theta2));
 
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
-
 
 end
