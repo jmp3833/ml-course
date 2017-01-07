@@ -69,18 +69,47 @@ X = [ones(m, 1) X];
 
 % Use identity matrix to create 
 % matrix of vectors for each label
-y = eye(num_labels)(y,:);
+yz = eye(num_labels)(y,:);
 
 %Calc forward propagation 
 a2 = [ones(m, 1) sigmoid(X * Theta1')];
 a3 = sigmoid(a2 * Theta2');
 
 % Compute cost function with newly calculated hypothesis
-J = (1 / m) .* sum(sum((-y) .* log(a3) - (1 - y) .* log (1 - a3)));
+J = (1 / m) .* sum(sum((-yz) .* log(a3) - (1 - yz) .* log (1 - a3)));
 
 % Regularized cost function
 reg = lambda / (2 * m) .* (sum(sum(Theta1(:, 2:end).^2)) + (sum(sum(Theta2(:, 2:end).^2))));
 J = J + reg;
+
+% Part 2 backpropagation impl 
+
+delta_accum_1 = zeros(size(Theta1));
+delta_accum_2 = zeros(size(Theta2));
+
+for t = 1:m
+  a1 = X(t,:);  
+  z2 = a1 * Theta1';
+  a2 = [1 sigmoid(z2)];
+  z3 = a2 * Theta2';
+  a3 = sigmoid(z3);
+  yi = zeros(1,num_labels);
+  yi(y(t)) = 1;
+  
+  d3 = a3 - yi;
+  d2 = d3 * Theta2 .* sigmoidGradient([1 z2]);
+  
+  delta_accum_1 = delta_accum_1 + d2(2:end)' * a1;
+  delta_accum_2 = delta_accum_2 + d3' * a2;
+end;
+
+Theta1_grad = delta_accum_1 / m;
+Theta2_grad = delta_accum_2 / m;
+
+%Part 3 - Regularization of neural network
+
+Theta1_grad(:, 2:input_layer_size+1) = Theta1_grad(:, 2:input_layer_size+1) + lambda / m * Theta1(:, 2:input_layer_size+1);
+Theta2_grad(:, 2:hidden_layer_size+1) = Theta2_grad(:, 2:hidden_layer_size+1) + lambda / m * Theta2(:, 2:hidden_layer_size+1);
 
 % -------------------------------------------------------------
 
