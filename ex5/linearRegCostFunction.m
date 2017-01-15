@@ -20,8 +20,8 @@ grad = zeros(size(theta));
 %
 
 hypothesisX = X * theta;
-lambdaParam = (lambda / (2 * m)) * sum(theta .^ 2);
 t = size(theta);
+lambdaParam = (lambda / (2 * m)) * sum(theta(2 : t) .^ 2);
 J = (1 / (2 * m)) * sum((hypothesisX - y) .^ 2) + lambdaParam;
 
 grad = (1 / m) * X' * (hypothesisX - y);

@@ -51,13 +51,17 @@ error_val   = zeros(m, 1);
 %       end
 %
 
-% ---------------------- Sample Solution ----------------------
+%Train the linear regression model on the data set.
 
+for i = 1:m
+  xTraining = X(1:i, :);
+  yTraining = y(1:i);
+  
+  theta = trainLinearReg(xTraining, yTraining, lambda);
 
-
-
-
-
+  error_train(i) = linearRegCostFunction(xTraining, yTraining, theta, 0);
+  error_val(i) = linearRegCostFunction(Xval, yval, theta, 0);
+end
 
 % -------------------------------------------------------------
 
