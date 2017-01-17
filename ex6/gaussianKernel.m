@@ -17,9 +17,8 @@ sim = 0;
 %
 
 
-
-
-
+%exp - computes e^x for every element of X
+sim = exp(-sum((x1 - x2).^ 2) / (2 * sigma .^ 2));
 
 % =============================================================
     
