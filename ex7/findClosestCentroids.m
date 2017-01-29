@@ -22,10 +22,18 @@ idx = zeros(size(X,1), 1);
 %
 
 
-
-
-
-
+% c^(i) assigned to value of j that minimizes || x^i - usubj || ^2
+% finding index of centroid closest to every training example
+for i = 1 : length(X)
+  d = inf;
+  for j = 1 : K
+    cur = norm(X(i, :) - centroids(j, :));
+    if (cur < d)
+      idx(i) = j; % j = index of centroid
+      d = cur; % cur = current shortest distance
+    end
+  end
+end
 
 % =============================================================
 
