@@ -25,7 +25,6 @@ Ureduce = U(:, 1:K);
   % By the first K values of U
 
 for i = 1 : size(X, 1)
-  keyboard()
   Z(i, :) = (X(i, :) * Ureduce)';
 end
 
