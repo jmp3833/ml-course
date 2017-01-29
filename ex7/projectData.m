@@ -18,8 +18,16 @@ Z = zeros(size(X, 1), K);
 %                    projection_k = x' * U(:, k);
 %
 
+Ureduce = U(:, 1:K);
 
+% For every value in dataset X 
+% Assign projected dataset row z to x multiplied 
+  % By the first K values of U
 
+for i = 1 : size(X, 1)
+  keyboard()
+  Z(i, :) = (X(i, :) * Ureduce)';
+end
 
 % =============================================================
 
