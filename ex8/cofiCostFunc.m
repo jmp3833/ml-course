@@ -51,14 +51,14 @@ for i = 1:num_movies
     rated = find(R(i, :) == 1);
     tsub = Theta(rated, :);
     Ysub = Y(i, rated);
-    X_grad(i, :) = (X(i, :) * tsub' - Ysub) * tsub;
+    X_grad(i, :) = (X(i, :) * tsub' - Ysub) * tsub + lambda * X(i, :);
 end
 
 for i = 1:num_users
     rated = find(R(:, i) == 1);
     xsub = X(rated, :);
     ysub = Y(rated, i);
-    Theta_grad(i, :) = (xsub * Theta(i, :)' - ysub)' * xsub;
+    Theta_grad(i, :) = (xsub * Theta(i, :)' - ysub)' * xsub + lambda * Theta(i, :);
 end
 
 % =============================================================
