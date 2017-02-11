@@ -42,12 +42,26 @@ Theta_grad = zeros(size(Theta));
 
 %Multiply by matrix R to zero out any values where
 %user i does not have a rating for movie j
-%Allows for a nice vectorized solution :) 
 J = (sum(sum(((X * Theta' .* R) - Y) .^ 2))) / 2;
+
+%Compute the gradients
+
+for i = 1:num_movies
+    rated = find(R(i, :) == 1);
+    tsub = Theta(rated, :);
+    Ysub = Y(i, rated);
+    X_grad(i, :) = (X(i, :) * tsub' - Ysub) * rated;
+end
+
+for i = 1:num_users
+    rated = find(R(:, i) == 1);
+    xsub = X(rated, :);
+    ysub = Y(rated, i);
+    Theta_grad(i, :) = (xsub * Theta(i, :)' - ysub)' * xsub;
+end
 
 % =============================================================
 
 % Unrolling into a single variable
 grad = [X_grad(:); Theta_grad(:)];
-
 end
