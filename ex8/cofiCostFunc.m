@@ -42,15 +42,16 @@ Theta_grad = zeros(size(Theta));
 
 %Multiply by matrix R to zero out any values where
 %user i does not have a rating for movie j
-J = (sum(sum(((X * Theta' .* R) - Y) .^ 2))) / 2;
+regTermTheta = ((lambda / 2) .* sum(sum(Theta .^2)));
+regTermX = ((lambda / 2) .* sum(sum(X .^2)));
+J = ((sum(sum(((X * Theta' .* R) - Y) .^ 2))) / 2) + regTermTheta + regTermX;
 
 %Compute the gradients
-
 for i = 1:num_movies
     rated = find(R(i, :) == 1);
     tsub = Theta(rated, :);
     Ysub = Y(i, rated);
-    X_grad(i, :) = (X(i, :) * tsub' - Ysub) * rated;
+    X_grad(i, :) = (X(i, :) * tsub' - Ysub) * tsub;
 end
 
 for i = 1:num_users
