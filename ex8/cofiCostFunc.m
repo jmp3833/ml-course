@@ -40,23 +40,14 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+%Multiply by matrix R to zero out any values where
+%user i does not have a rating for movie j
+%Allows for a nice vectorized solution :) 
+J = (sum(sum(((X * Theta' .* R) - Y) .^ 2))) / 2;
 
 % =============================================================
 
+% Unrolling into a single variable
 grad = [X_grad(:); Theta_grad(:)];
 
 end

@@ -37,11 +37,9 @@ for epsilon = min(pval):stepsize:max(pval)
     F1 = (2 * precision * recall) / (precision + recall);
 
     % =============================================================
-
     if F1 > bestF1
        bestF1 = F1;
        bestEpsilon = epsilon;
     end
 end
-
 end
